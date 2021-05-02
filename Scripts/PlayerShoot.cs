@@ -5,7 +5,12 @@ namespace Scripts
 {
     public class PlayerShoot : NetworkBehaviour
     {
-        public PlayerWeapon weapon;
+        [SerializeField]
+        private PlayerWeapon weapon;
+        [SerializeField]
+        private GameObject weaponGFX;
+        [SerializeField]
+        private string weaponLayerName = "Weapon";
         [SerializeField]
         private Camera isCam;
         [SerializeField]
@@ -17,10 +22,7 @@ namespace Scripts
                 Debug.Log("Pas de caméra assignée");
                 this.enabled = false; // Désactive le script sur le joueur
             }
-            else
-            {
-
-            }
+            weaponGFX.layer = LayerMask.NameToLayer(weaponLayerName);
 
         }
 

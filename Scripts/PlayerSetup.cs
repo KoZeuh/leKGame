@@ -12,6 +12,10 @@ namespace Scripts
         [SerializeField]
         private string remoteLayerName = "RemotePlayer"; // Doit correspondre à Layer crée
 
+        [SerializeField]
+        private GameObject playerUIPrefab;
+        private GameObject playerUIInstance;
+
         Camera sceneCamera;
         private void Start()
         {
@@ -27,6 +31,9 @@ namespace Scripts
                 {
                     sceneCamera.gameObject.SetActive(false); // Désative le Camera Sc-ne
                 }
+
+                // Création du UI du joueur local (crosshair,vie ect)
+                playerUIInstance = Instantiate(playerUIPrefab);
             }
 
             GetComponent<Player>().Setup();
@@ -62,7 +69,7 @@ namespace Scripts
             {
                 sceneCamera.gameObject.SetActive(true); // Réactive la Camera Scène si joueur a deco
             }
-
+            Destroy(playerUIInstance);
             GameManager.UnregisterPlayer(transform.name);
         }
     }
