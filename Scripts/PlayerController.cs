@@ -2,6 +2,7 @@
 
 [RequireComponent(typeof(PlayerMotor))]
 [RequireComponent(typeof(ConfigurableJoint))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] // Affiche la valeur dans la page Unity
@@ -21,11 +22,13 @@ public class PlayerController : MonoBehaviour
 
     private PlayerMotor motor;
     private ConfigurableJoint joint;
+    private Animator animator;
 
     private void Start()
     {
         motor = GetComponent<PlayerMotor>(); // Permet de récupérer le contenu du PlayerController dans la var "motor"
         joint = GetComponent<ConfigurableJoint>(); // Permet de récupérer le contenu du ConfigurableJoint dans la var "joint"
+        animator = GetComponent<Animator>();
         Debug.Log("PlayerController started");
 
         SetJointSettings(jointSpring); // Activation des paramètres du jetpack au start du jeu
@@ -49,6 +52,9 @@ public class PlayerController : MonoBehaviour
         Vector3 moveVertical = transform.forward * zMov;
 
         Vector3 velocity = (moveHorizontal + moveVertical).normalized * speed;
+
+        // Jouer animation du jetpack
+        animator.SetFloat("ForwardVelocity", zMov); // Doit être identique à la valeur du Blend
 
         motor.Move(velocity);
     }
